@@ -20,7 +20,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
 
 export default withAuth(
-  async function middleware(req: NextRequest) {
+  async function middleware(req: NextRequest): Promise<NextResponse> {
     // You can add logic here if needed
     return NextResponse.next();
   },
