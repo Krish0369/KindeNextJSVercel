@@ -27,6 +27,7 @@ package-lock.json
 pnpm.lock.yaml
 
 # local env files
+.env
 .env*.local
 
 # vercel
