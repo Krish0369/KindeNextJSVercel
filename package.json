@@ -1,6 +1,11 @@
 {
-  "name": "kinde-nextjs-app-router-starter-kit",
+  "name": "billing-stripe-sso",
   "version": "0.1.0",
+  "private": true,
+  "description": "Kinde SSO with billing portal integration (Next.js App Router)",
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -8,15 +13,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@kinde-oss/kinde-auth-nextjs": "^2.10.0",
-    "@types/node": "20.11.5",
-    "@types/react": "19.0.2",
-    "@types/react-dom": "19.0.2",
-    "eslint": "8.56.0",
-    "eslint-config-next": "^15.1.2",
-    "next": "^15.1.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "typescript": "5.3.3"
+    "@kinde-oss/kinde-auth-nextjs": "^2.12.2",
+    "@kinde/management-api-js": "^0.17.0",
+    "next": "^15.5.18",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.11",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^15.5.18",
+    "typescript": "^5.9.3"
   }
 }

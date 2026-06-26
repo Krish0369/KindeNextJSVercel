@@ -1,15 +1,16 @@
-
 import "./globals.css";
 import {
-  RegisterLink,
   LoginLink,
   LogoutLink,
+  RegisterLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 
-export const metadata = {
+const LIVE_ORG_CODE = "org_a2fc116942f3c";
+
+export const metadata: Metadata = {
   title: "Kinde Auth",
   description: "Kinde with NextJS App Router",
 };
@@ -20,42 +21,59 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const { isAuthenticated, getUser } = getKindeServerSession();
+  const authenticated = await isAuthenticated();
   const user = await getUser();
+
   return (
     <html lang="en">
       <body>
         <header>
-          <nav className="nav container">
-            <h1 className="text-display-3">KindeAuth</h1>
-            <div className="flex flex-col gap-3">
-              {!(await isAuthenticated()) ? (
-                <>
-                  <LoginLink className="btn btn-ghost sign-in-btn mr-4">
-                    Sign in
-                  </LoginLink>
-
-                  <LoginLink orgCode="org_4be1cd496a53d" className="btn btn-ghost sign-in-btn mr-4">
-                    Signin to Live
-                  </LoginLink>
-                  <Link href="/api/auth/register?pricing_table_key=user_plan" className="btn btn-dark mr-4">
-                    Sign up User
-                  </Link>
-                  {/* Organization sign-up with billing plan */}
-                  <Link 
-                    href="/api/auth/register?is_create_org=true&pricing_table_key=organization_plans"
-                    className="btn btn-dark"
-                  >
-                    Sign Up Org And User
-                  </Link>
-                  
-                </>
+          <nav className="nav container nav--centered">
+            <div className="nav__stack">
+              {!authenticated ? (
+                <div className="nav-auth">
+                  <div className="nav-auth__buttons">
+                  <LoginLink className="btn btn-sign-in">
+                      Signin
+                    </LoginLink>
+                    <LoginLink orgCode={LIVE_ORG_CODE} className="btn btn-sign-in">
+                      Signin: Specific Org
+                    </LoginLink>
+                    <RegisterLink orgCode={LIVE_ORG_CODE} className="btn btn-dark">
+                      Signup: Specific Org
+                    </RegisterLink>
+                    <RegisterLink
+                      orgCode={LIVE_ORG_CODE}
+                      authUrlParams={{ pricingTableKey: "user_plan" }}
+                      className="btn btn-dark"
+                    >
+                      Signup: Specific Org: Billing
+                    </RegisterLink>
+                    <RegisterLink
+                      authUrlParams={{ is_create_org: "true" }}
+                      className="btn btn-outline"
+                    >
+                      Signup: Org&User
+                    </RegisterLink>
+                    <RegisterLink
+                      authUrlParams={{
+                        is_create_org: "true",
+                        pricingTableKey: "organization_plan",
+                      }}
+                      className="btn btn-outline"
+                    >
+                      Signup: Org&User: Billing
+                    </RegisterLink>
+                    
+                  </div>
+                </div>
               ) : (
                 <div className="profile-blob">
                   {user?.picture ? (
                     <Image
                       className="avatar"
-                      src={user?.picture}
-                      alt="user profile avatar"
+                      src={user.picture}
+                      alt="User profile"
                       width={40}
                       height={40}
                       referrerPolicy="no-referrer"
@@ -78,20 +96,6 @@ export default async function RootLayout({
           </nav>
         </header>
         <main>{children}</main>
-        <footer className="footer">
-          <div className="container">
-            <strong className="text-heading-2">KindeAuth</strong>
-            <p className="footer-tagline text-body-3">
-              Visit our{" "}
-              <Link className="link" href="https://kinde.com/docs">
-                help center
-              </Link>
-            </p>
-            <small className="text-subtle">
-              © 2023 KindeAuth, Inc. All rights reserved
-            </small>
-          </div>
-        </footer>
       </body>
     </html>
   );
