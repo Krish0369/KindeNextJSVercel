@@ -1,6 +1,5 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
-import { fetchOrgStatus } from "./management/organizations";
 
 export async function GET() {
   const {
@@ -45,18 +44,12 @@ export async function GET() {
   const orgCode =
     organization?.orgCode ?? permissions?.orgCode ?? entitlements?.orgCode ?? null;
 
-  const orgStatus = orgCode
-    ? await fetchOrgStatus(orgCode)
-    : { name: null, isSuspended: null, suspendedOn: null };
-
   return NextResponse.json({
     data: {
       dashboard: {
         organization: {
           code: orgCode,
-          name: organization?.orgName ?? orgStatus.name ?? null,
-          isSuspended: orgStatus.isSuspended,
-          suspendedOn: orgStatus.suspendedOn,
+          name: organization?.orgName ?? null,
         },
         user: {
           id: user?.id ?? null,

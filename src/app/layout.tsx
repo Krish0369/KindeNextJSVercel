@@ -8,7 +8,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Image from "next/image";
 import type { Metadata } from "next";
 
-const LIVE_ORG_CODE = "org_a2fc116942f3c";
+const LIVE_ORG_CODE = "org_7657831520c9c4";
 
 export const metadata: Metadata = {
   title: "Kinde Auth",
@@ -58,7 +58,7 @@ export default async function RootLayout({
                     <RegisterLink
                       authUrlParams={{
                         is_create_org: "true",
-                        pricingTableKey: "organization_plan",
+                        pricingTableKey: "organization_plans",
                       }}
                       className="btn btn-outline"
                     >

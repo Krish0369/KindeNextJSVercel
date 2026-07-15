@@ -7,8 +7,6 @@ interface DashboardData {
   organization: {
     code: string | null;
     name: string | null;
-    isSuspended: boolean | null;
-    suspendedOn: string | null;
   };
   user: {
     id: string | null;
@@ -64,18 +62,6 @@ function hasDetail(data: unknown): boolean {
     return Object.keys(data as Record<string, unknown>).length > 0;
   }
   return true;
-}
-
-function formatOrgStatus(org: DashboardData["organization"] | undefined): string {
-  if (!org || org.isSuspended === null || org.isSuspended === undefined) {
-    return "Unknown";
-  }
-  if (org.isSuspended) {
-    return org.suspendedOn
-      ? `Suspended (since ${new Date(org.suspendedOn).toLocaleString()})`
-      : "Suspended";
-  }
-  return "Active";
 }
 
 export default function DashboardPage() {
@@ -164,9 +150,6 @@ export default function DashboardPage() {
               </p>
               <p className="text-body-3">
                 Organization Code: {dashboardData?.organization.code ?? "N/A"}
-              </p>
-              <p className="text-body-3">
-                Status: {formatOrgStatus(dashboardData?.organization)}
               </p>
             </section>
 
